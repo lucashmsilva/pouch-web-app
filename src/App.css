@@ -1,0 +1,178 @@
+.list {
+  text-align: left;
+  margin: auto;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-brand p {
+  margin-bottom: 0;
+}
+
+.logo {
+  display: block;
+  text-indent: -9999px;
+  width: 50px;
+  height: 50px;
+  background: url(logo.svg);
+  background-size: 50px 50px;
+}
+
+.submit-form {
+  max-width: 80%;
+  margin: auto;
+}
+.list-group-item.active {
+  background-color: #aeafb1;
+  border-color: #aeafb1;
+  color:#000000;
+}
+
+.edit-form {
+  max-width: 80%;
+  margin: auto;
+}
+
+a.deco-none {
+  color:#000000;
+  text-decoration:none;
+}
+
+.article-metadata {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.icons-list {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.icon {
+  display: block;
+  text-indent: -9999px;
+  width: 25px;
+  height: 25px;
+  background-size: 25px 25px;
+  margin-right: 5px;
+  background-color: #343a40;
+  cursor: pointer;
+  mask-size: cover !important;
+  -webkit-mask-size: cover !important;
+}
+.icon.true {
+  background-color: #898b10;
+}
+.icon:hover {
+  background-color: #1a1919;
+}
+.icon.true:hover {
+  background-color: #6a6b0c;
+}
+.star {
+  mask: url(star.svg) no-repeat 50% 50%;
+  -webkit-mask: url(star.svg) no-repeat 50% 50%;
+}
+.archive {
+  mask: url(archive.svg) no-repeat 50% 50%;
+  -webkit-mask: url(archive.svg) no-repeat 50% 50%;
+}
+.tag {
+  mask: url(tag.svg) no-repeat 50% 50%;
+  -webkit-mask: url(tag.svg) no-repeat 50% 50%;
+}
+.trash-can {
+  mask: url(trash-can.svg) no-repeat 50% 50%;
+  -webkit-mask: url(trash-can.svg) no-repeat 50% 50%;
+}
+
+.tag-list {
+  display: flex;
+  align-items: center;
+  overflow: scroll;
+  scrollbar-width: none;
+  max-width: 50%;
+}
+.tags-item {
+  display: flex;
+  align-items: center;
+  margin-left: 7px;
+  white-space: nowrap;
+  color: #535455;
+}
+.tags-item .tag {
+  width: 19px;
+  height: 19px;
+  background-size: 19px 19px;
+  margin-right: 1px;
+  cursor: auto;
+  background-color: #535455;
+}
+.tags-item span{
+  display: inline-block;
+}
+
+.divisor-block{
+  display: flex;
+  align-items: center;
+  color: #535455;
+  justify-content: space-between;
+}
+
+.divider {
+  display: inline-block;
+  border-bottom: #535455 1px solid;
+  width: 350px;
+  margin: 30px;
+}
+
+.session-box {
+  margin: auto;
+}
+
+.lds-facebook {
+  display: block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-facebook div {
+  display: block;
+  position: absolute;
+  left: 8px;
+  width: 16px;
+  background: #727F8C;
+  animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.lds-facebook div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+.lds-facebook div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+.lds-facebook div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0;
+}
+@keyframes lds-facebook {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+  50%, 100% {
+    top: 24px;
+    height: 32px;
+  }
+}
+
+.loading {
+  margin: auto;
+}

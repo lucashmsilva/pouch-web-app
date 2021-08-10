@@ -28,10 +28,10 @@ export default class IconList extends Component<Props, State>{
         const { article } = this.props;
         return (
             <div className="icons-list">
+                <div className="icon tag-plus" />
                 <div className={`icon star ${article.favorited}`} onClick={() => this.editArticle({ favorited: !article.favorited }, article.id)} />
                 <div className={`icon archive ${article.archived}`} onClick={() => this.editArticle({ archived: !article.archived }, article.id)} />
                 <div className={`icon trash-can ${article.deleted}`} onClick={() => this.editArticle({ deleted: !article.deleted }, article.id)} />
-                <div className="icon tag" />
             </div>
         );
     }

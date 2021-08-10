@@ -83,6 +83,10 @@ a.deco-none {
   mask: url(archive.svg) no-repeat 50% 50%;
   -webkit-mask: url(archive.svg) no-repeat 50% 50%;
 }
+.tag-plus {
+  mask: url(tag-plus.svg) no-repeat 50% 50%;
+  -webkit-mask: url(tag-plus.svg) no-repeat 50% 50%;
+}
 .tag {
   mask: url(tag.svg) no-repeat 50% 50%;
   -webkit-mask: url(tag.svg) no-repeat 50% 50%;

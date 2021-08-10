@@ -53,7 +53,7 @@ class AddArticle extends Component<Props, State> {
 
   checkSession() {
     this.setState({ loadingCheckingSession: true });
-    AuthService.getUser()
+    AuthService.getSession()
       .then(response => {
         if (!response.data?.id) {
           this.props.history.push('/');

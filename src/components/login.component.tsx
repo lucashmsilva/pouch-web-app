@@ -80,7 +80,7 @@ class Login extends Component<Props, State>{
 
   checkSession() {
     this.setState({ loadingCheckingSession: true });
-    AuthService.getUser()
+    AuthService.getSession()
       .then(response => {
         if (response.data?.id) {
           this.props.history.push('/articles');
@@ -194,7 +194,7 @@ class Login extends Component<Props, State>{
             </div>
             {/* <div>
           <h1>get session</h1>
-          <button className="btn btn-success" onClick={this.getUser}>submit</button>
+          <button className="btn btn-success" onClick={this.getSession}>submit</button>
           {user ? <h1>Welcome Back {user.name}</h1> : null}
         </div> */}
           </div >

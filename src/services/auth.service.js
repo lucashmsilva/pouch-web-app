@@ -16,9 +16,9 @@ class AuthService {
     return http.delete("/auth/logout");
   }
 
-  getUser() {
+  getSession() {
     http.options.withCredentials = true;
-    return http.get("/session");
+    return http.get("/auth/session");
   }
 }
 

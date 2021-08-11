@@ -43,7 +43,6 @@ class App extends Component<Props, State> {
       <div>
         <nav className="navbar navbar-expand navbar-dark bg-dark">
           <Link to={"/articles"} className="navbar-brand">
-            <div className="logo" />
             <p>pouch</p>
           </Link>
           <div className="navbar-nav mr-auto">

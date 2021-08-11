@@ -17,7 +17,7 @@
   text-indent: -9999px;
   width: 50px;
   height: 50px;
-  background: url(logo.svg);
+  background: url(icons/logo.svg);
   background-size: 50px 50px;
 }
 
@@ -76,24 +76,24 @@ a.deco-none {
   background-color: #6a6b0c;
 }
 .star {
-  mask: url(star.svg) no-repeat 50% 50%;
-  -webkit-mask: url(star.svg) no-repeat 50% 50%;
+  mask: url(icons/star.svg) no-repeat 50% 50%;
+  -webkit-mask: url(icons/star.svg) no-repeat 50% 50%;
 }
 .archive {
-  mask: url(archive.svg) no-repeat 50% 50%;
-  -webkit-mask: url(archive.svg) no-repeat 50% 50%;
+  mask: url(icons/archive.svg) no-repeat 50% 50%;
+  -webkit-mask: url(icons/archive.svg) no-repeat 50% 50%;
 }
 .tag-plus {
-  mask: url(tag-plus.svg) no-repeat 50% 50%;
-  -webkit-mask: url(tag-plus.svg) no-repeat 50% 50%;
+  mask: url(icons/tag-plus.svg) no-repeat 50% 50%;
+  -webkit-mask: url(icons/tag-plus.svg) no-repeat 50% 50%;
 }
 .tag {
-  mask: url(tag.svg) no-repeat 50% 50%;
-  -webkit-mask: url(tag.svg) no-repeat 50% 50%;
+  mask: url(icons/tag.svg) no-repeat 50% 50%;
+  -webkit-mask: url(icons/tag.svg) no-repeat 50% 50%;
 }
 .trash-can {
-  mask: url(trash-can.svg) no-repeat 50% 50%;
-  -webkit-mask: url(trash-can.svg) no-repeat 50% 50%;
+  mask: url(icons/trash-can.svg) no-repeat 50% 50%;
+  -webkit-mask: url(icons/trash-can.svg) no-repeat 50% 50%;
 }
 
 .tag-list {
@@ -140,6 +140,10 @@ a.deco-none {
   margin: auto;
 }
 
+.loading {
+  margin: auto;
+}
+
 .lds-facebook {
   display: block;
   position: relative;
@@ -175,8 +179,4 @@ a.deco-none {
     top: 24px;
     height: 32px;
   }
-}
-
-.loading {
-  margin: auto;
 }

@@ -6,6 +6,11 @@ class AuthService {
     return http.post("/auth/login", loginData);
   }
 
+  githubLogin(loginData) {
+    http.options.withCredentials = true;
+    return http.post("/auth/login/github", loginData);
+  }
+
   regsiter(registrationData) {
     http.options.withCredentials = true;
     return http.post("/auth/register", registrationData);
@@ -18,7 +23,7 @@ class AuthService {
 
   getSession() {
     http.options.withCredentials = true;
-    return http.get("/auth/session");
+    return http.get("/user/session");
   }
 }
 

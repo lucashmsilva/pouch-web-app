@@ -144,6 +144,16 @@ a.deco-none {
   margin: auto;
 }
 
+.login-options {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.login-options button{
+  max-width: max-content;
+}
+
 .lds-facebook {
   display: block;
   position: relative;

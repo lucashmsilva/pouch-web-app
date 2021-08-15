@@ -8,6 +8,7 @@ import AddArticle from "./components/add-article.component";
 import Article from "./components/article.component";
 import ArticleList from "./components/article-list.component";
 import Login from "./components/login.component";
+import GitHubLoginCallback from "./components/github-login-callback.component";
 
 import LoadingSpinner from "./components/loading.component";
 import LogoutLink from "./components/logout-link.component";
@@ -75,6 +76,7 @@ class App extends Component<Props, State> {
               <Route exact path={"/articles"} component={ArticleList} />
               <Route exact path="/add" component={AddArticle} />
               <Route path="/articles/:id" component={Article} />
+              <Route path="/login/github/callback" component={GitHubLoginCallback} />
             </Switch>
           )}
         </div>

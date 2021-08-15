@@ -1,7 +1,9 @@
 import { ChangeEvent, Component } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import { GithubLoginButton } from "react-social-login-buttons";
 
 import AuthService from "../services/auth.service";
+import GithubLoginService from "../services/github-login.service";
 import IUserLoginData from '../types/user-login.type';
 import IUserRegistrationData from '../types/user-registration.type';
 import LoadingSpinner from "./loading.component";
@@ -27,6 +29,7 @@ class Login extends Component<Props, State>{
     this.onChangeRegisterPasswordInput = this.onChangeRegisterPasswordInput.bind(this);
     this.onChangeUsernameInput = this.onChangeUsernameInput.bind(this);
     this.onChangeLoginPasswordInput = this.onChangeLoginPasswordInput.bind(this);
+    this.githubOAuthCall = this.githubOAuthCall.bind(this);
 
     this.state = {
       registrationData: {
@@ -125,6 +128,12 @@ class Login extends Component<Props, State>{
     this.setState({ loginData });
   }
 
+  githubOAuthCall() {
+    const authorizeUri = GithubLoginService.getAuthorizeUri();
+
+    window.location.href = authorizeUri;
+  }
+
   render() {
     const { loadingCheckingSession, registrationLoading, loginLoading } = this.state;
     return (
@@ -163,7 +172,10 @@ class Login extends Component<Props, State>{
               {registrationLoading ? (
                 <LoadingSpinner />
               ) : (
-                <button className="btn btn-success" onClick={this.register}>register</button>
+                <div className="login-options">
+                  <button className="btn btn-success" onClick={this.register}>register</button> 
+                  <GithubLoginButton onClick={this.githubOAuthCall} align="center"> <span>register </span> </GithubLoginButton>
+                </div>
               )}
 
               <div className="divisor-block"><div className="divider" /> <h4>or</h4> <div className="divider" /> </div>
@@ -188,15 +200,12 @@ class Login extends Component<Props, State>{
               {loginLoading ? (
                 <LoadingSpinner />
               ) : (
-                <button className="btn btn-success" onClick={this.login}>login</button>
+                <div className="login-options">
+                  <button className="btn btn-success" onClick={this.login}>login</button>
+                  <GithubLoginButton onClick={this.githubOAuthCall} align="center" > <span>login</span> </GithubLoginButton>
+                </div>
               )}
-
             </div>
-            {/* <div>
-          <h1>get session</h1>
-          <button className="btn btn-success" onClick={this.getSession}>submit</button>
-          {user ? <h1>Welcome Back {user.name}</h1> : null}
-        </div> */}
           </div >
         )}
       </div>

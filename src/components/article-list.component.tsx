@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link, RouteComponentProps, withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import ArticleDataService from "../services/article.service";
@@ -24,6 +24,7 @@ class ArticleList extends Component<Props, State> {
     super(props);
     this.retrieveArticles = this.retrieveArticles.bind(this);
     this.highlightItem = this.highlightItem.bind(this);
+    this.openArticle = this.openArticle.bind(this);
 
     this.state = {
       articles: {
@@ -66,6 +67,10 @@ class ArticleList extends Component<Props, State> {
     this.setState({ currentIndex: index });
   }
 
+  openArticle(articleId: number) {
+    this.props.history.push(`/articles/${articleId}`);
+  }
+
   render() {
     const { articles, currentIndex, loading } = this.state;
 
@@ -89,13 +94,12 @@ class ArticleList extends Component<Props, State> {
                     onMouseEnter={() => this.highlightItem(index)}
                     onMouseLeave={() => this.highlightItem(-1)}
                   >
-                    <Link
-                      className="deco-none"
-                      to={`/articles/${article.id}`}
-                      onClick={() => this.highlightItem(index)}
+                    <h4
+                      className="article-item"
+                      onClick={() => this.openArticle(article.id)}
                     >
-                      <h4>{article.title}</h4>
-                    </Link>
+                      <strong>{article.title}</strong>
+                    </h4>
                     <div>{article.excerpt?.length > MAX_EXERPT_LENGTH ? `${article.excerpt.slice(0, MAX_EXERPT_LENGTH)} [...]` : article.excerpt}</div>
                     <div className="article-metadata">
                       <TagList tags={article.tags} />

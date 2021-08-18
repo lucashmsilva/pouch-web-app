@@ -143,7 +143,7 @@ class Login extends Component<Props, State>{
         ) : (
           <div className="session-box col-md-6">
             <div className="submit-form" >
-              <h3>register</h3>
+            <h3><strong>register</strong></h3>
               <div className="form-group">
                 <input
                   className="form-control"
@@ -180,7 +180,7 @@ class Login extends Component<Props, State>{
 
               <div className="divisor-block"><div className="divider" /> <h4>or</h4> <div className="divider" /> </div>
 
-              <h3>login</h3>
+              <h3><strong>login</strong></h3>
               <div className="form-group">
                 <input
                   className="form-control"

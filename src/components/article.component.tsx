@@ -86,11 +86,12 @@ class Article extends Component<Props, State> {
           <LoadingSpinner />
         ) : (
           <div className="article">
-            <h1>{currentArticle.title}</h1>
+            <h1><strong>{currentArticle.title}</strong></h1>
             <div className="article-metadata">
               <TagList tags={currentArticle.tags} />
               <IconList article={currentArticle} />
             </div>
+            <hr/>
             <div dangerouslySetInnerHTML={{ __html: currentArticle.articleContent?.content || currentArticle.originalUrl }} />
           </div>
         )}

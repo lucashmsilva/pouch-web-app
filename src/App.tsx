@@ -42,14 +42,14 @@ class App extends Component<Props, State> {
 
     return (
       <div>
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
+        <nav className="navbar navbar-expand  ">
           <Link to={"/articles"} className="navbar-brand">
-            <p>pouch</p>
+            <strong><p>pouch</p></strong>
           </Link>
           <div className="navbar-nav mr-auto">
             <li className="nav-item">
               <Link to={"/articles"} className="nav-link">
-                my List
+                my list
               </Link>
             </li>
             <li className="nav-item">

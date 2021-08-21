@@ -26,6 +26,15 @@
 body {
   background-color: var(--main-background);
   color: var(--main-foreground);
+  font-family:  Helvetica, Arial, sans-serif; 
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  margin: auto;
 }
 
 code, pre {
@@ -111,7 +120,7 @@ a, a:hover {
 .list-group-item {
   border: 1px solid var(--toolbar-border);
   border-radius: 6px;
-  
+  word-wrap:break-word;
   background-color: var(--main-background);
   margin-inline-start: max(calc(50% - 17px - var(--inline-padding)), calc(100% - 96px - 34px - 2 * var(--inline-padding)));
   list-style: none;

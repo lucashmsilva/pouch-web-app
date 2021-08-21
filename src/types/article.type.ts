@@ -3,8 +3,6 @@ import ITagData from "./tag.type";
 
 export default interface IArticleData {
   id: number
-  title: string
-  excerpt: string
   originalUrl: string
   readingTime: number
   contentId: number
@@ -15,6 +13,6 @@ export default interface IArticleData {
   createdAt: Date
   updatedAt: Date
 
-  articleContent?: IArticleContentData
+  articleContent: IArticleContentData
   tags?: ITagData[]
 }

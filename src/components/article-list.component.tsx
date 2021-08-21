@@ -98,9 +98,9 @@ class ArticleList extends Component<Props, State> {
                       className="article-item"
                       onClick={() => this.openArticle(article.id)}
                     >
-                      <strong>{article.title}</strong>
+                      <strong>{article.articleContent?.title}</strong>
                     </h4>
-                    <div>{article.excerpt?.length > MAX_EXERPT_LENGTH ? `${article.excerpt.slice(0, MAX_EXERPT_LENGTH)} [...]` : article.excerpt}</div>
+                    <div>{article.articleContent.excerpt?.length > MAX_EXERPT_LENGTH ? `${article.articleContent?.excerpt.slice(0, MAX_EXERPT_LENGTH)} [...]` : article.articleContent.excerpt}</div>
                     <div className="article-metadata">
                       <TagList tags={article.tags} />
                       <IconList article={article} />

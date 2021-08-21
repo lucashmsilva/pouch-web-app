@@ -26,8 +26,6 @@ class Article extends Component<Props, State> {
     this.state = {
       currentArticle: {
         id: 0,
-        title: '',
-        excerpt: '',
         originalUrl: '',
         readingTime: 0,
         contentId: 0,
@@ -39,7 +37,8 @@ class Article extends Component<Props, State> {
         updatedAt: new Date(),
         articleContent: {
           id: 0,
-          type: '',
+          title: '',
+          excerpt: '',
           content: '',
           createdAt: new Date(0),
           updatedAt: new Date(0),
@@ -86,7 +85,7 @@ class Article extends Component<Props, State> {
           <LoadingSpinner />
         ) : (
           <div className="article">
-            <h1><strong>{currentArticle.title}</strong></h1>
+            <h1><strong>{currentArticle.articleContent.title}</strong></h1>
             <div className="article-metadata">
               <TagList tags={currentArticle.tags} />
               <IconList article={currentArticle} />

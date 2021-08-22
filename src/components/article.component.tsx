@@ -29,6 +29,7 @@ class Article extends Component<Props, State> {
         originalUrl: '',
         readingTime: 0,
         contentId: 0,
+        isReadable: false,
         read: false,
         archived: false,
         favorited: false,

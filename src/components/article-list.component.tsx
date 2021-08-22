@@ -67,8 +67,12 @@ class ArticleList extends Component<Props, State> {
     this.setState({ currentIndex: index });
   }
 
-  openArticle(articleId: number) {
-    this.props.history.push(`/articles/${articleId}`);
+  openArticle(articleId: number, isReadable: boolean, originalUrl: string) {
+    if (isReadable) {
+      this.props.history.push(`/articles/${articleId}`);
+    } else {
+      window.open(originalUrl, "_blank");
+    }
   }
 
   render() {
@@ -96,7 +100,7 @@ class ArticleList extends Component<Props, State> {
                   >
                     <h4
                       className="article-item"
-                      onClick={() => this.openArticle(article.id)}
+                      onClick={() => this.openArticle(article.id, article.isReadable, article.originalUrl)}
                     >
                       <strong>{article.articleContent?.title}</strong>
                     </h4>

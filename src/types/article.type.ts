@@ -6,6 +6,7 @@ export default interface IArticleData {
   originalUrl: string
   readingTime: number
   contentId: number
+  isReadable: boolean
   read: boolean
   archived: boolean
   favorited: boolean

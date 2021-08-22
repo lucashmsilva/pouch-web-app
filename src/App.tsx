@@ -1,5 +1,6 @@
 import { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, RouteComponentProps, withRouter } from "react-router-dom";
+import { NavDropdown } from "react-bootstrap";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -9,12 +10,13 @@ import Article from "./components/article.component";
 import ArticleList from "./components/article-list.component";
 import Login from "./components/login.component";
 import GitHubLoginCallback from "./components/github-login-callback.component";
+import ChangePassword from "./components/change-password.component";
 
 import LoadingSpinner from "./components/loading.component";
 import LogoutLink from "./components/logout-link.component";
 
 
-type Props = {};
+type Props = RouteComponentProps;
 
 type State = {
   loading: boolean
@@ -60,9 +62,16 @@ class App extends Component<Props, State> {
           </div>
 
           <div className="navbar-nav ml-auto">
-            <li className="nav-item" onClick={() => this.setState({ loading: true })}>
-              <LogoutLink setLoading={this.setLoading} />
-            </li>
+            <NavDropdown
+              id="nav-dropdown-dark-example"
+              title="options"
+            >
+              <NavDropdown.Item onClick={() => this.props.history.push('/change-password')}>change password</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={() => this.setState({ loading: true })}>
+                <LogoutLink setLoading={this.setLoading} />
+              </NavDropdown.Item>
+            </NavDropdown>
           </div>
 
         </nav>
@@ -77,6 +86,7 @@ class App extends Component<Props, State> {
               <Route exact path="/add" component={AddArticle} />
               <Route path="/articles/:id" component={Article} />
               <Route path="/login/github/callback" component={GitHubLoginCallback} />
+              <Route path="/change-password" component={ChangePassword} />
             </Switch>
           )}
         </div>
@@ -85,4 +95,4 @@ class App extends Component<Props, State> {
   }
 }
 
-export default App;
+export default withRouter(App);

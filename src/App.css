@@ -262,6 +262,26 @@ h4.article-item:hover {
   max-width: max-content;
 }
 
+.dropdown-menu  {
+  color: #dee2e6;
+  background-color: #343a40;
+  border-color: rgba(0,0,0,.15);
+}
+
+.dropdown-item {
+  color: #dee2e6;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+  text-decoration: none;
+  color: #fff;
+  background-color: hsla(0,0%,100%,.15);
+}
+
+.dropdown-divider {
+  border-color: rgba(0,0,0,.15);
+}
+
 .lds-facebook {
   display: block;
   position: relative;

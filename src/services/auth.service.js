@@ -25,6 +25,11 @@ class AuthService {
     http.options.withCredentials = true;
     return http.get("/user/session");
   }
+
+  changePassword(newPassowrd, currentPassword) {
+    http.options.withCredentials = true;
+    return http.patch("/user/password", { newPassowrd, currentPassword });
+  }
 }
 
 export default new AuthService();

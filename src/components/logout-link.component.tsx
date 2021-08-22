@@ -20,7 +20,6 @@ export default function LogoutLink(props: Props) {
 	return (
 		<span
 			onClick={handleClick}
-			className="nav-link"
 			style={{ cursor: "pointer" }}
 		>
 			logout

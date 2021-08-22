@@ -55,13 +55,12 @@ class Login extends Component<Props, State>{
     this.setState({ loginLoading: true });
     AuthService.login(this.state.loginData)
       .then(() => {
+        this.setState({ loginLoading: false });
         this.props.history.push('/articles');
         console.log('logged in!!');
       })
       .catch(error => {
         console.log(error);
-      })
-      .finally(() => {
         this.setState({ loginLoading: false });
       });
   }
@@ -70,14 +69,13 @@ class Login extends Component<Props, State>{
     this.setState({ registrationLoading: true });
     AuthService.regsiter(this.state.registrationData)
       .then(() => {
+        this.setState({ registrationLoading: false });
         this.props.history.push('/articles');
         console.log('registered!!');
       })
       .catch(error => {
-        console.log(error);
-      })
-      .finally(() => {
         this.setState({ registrationLoading: false });
+        console.log(error);
       });
   }
 

@@ -211,6 +211,9 @@ h4.article-item:hover {
   scrollbar-width: none;
   max-width: 50%;
 }
+.tag-list::-webkit-scrollbar {
+  display: none;
+}
 .tags-item {
   display: flex;
   align-items: center;

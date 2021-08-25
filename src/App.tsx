@@ -5,6 +5,8 @@ import { NavDropdown } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
+import AuthService from "./services/auth.service";
+
 import AddArticle from "./components/add-article.component";
 import Article from "./components/article.component";
 import ArticleList from "./components/article-list.component";
@@ -13,8 +15,6 @@ import GitHubLoginCallback from "./components/github-login-callback.component";
 import ChangePassword from "./components/change-password.component";
 
 import LoadingSpinner from "./components/loading.component";
-import LogoutLink from "./components/logout-link.component";
-
 
 type Props = RouteComponentProps;
 
@@ -27,6 +27,7 @@ class App extends Component<Props, State> {
     super(props);
 
     this.setLoading = this.setLoading.bind(this);
+    this.logout = this.logout.bind(this);
 
     this.state = {
       loading: false
@@ -37,6 +38,14 @@ class App extends Component<Props, State> {
     this.setState({
       loading: isLoading
     })
+  }
+
+  logout() {
+    this.setLoading(true);
+    AuthService.logout()
+      .then(() => this.props.history.push("/"))
+      .catch(error => console.log(error))
+      .finally(() => this.setLoading(false));
   }
 
   render() {
@@ -68,9 +77,7 @@ class App extends Component<Props, State> {
             >
               <NavDropdown.Item onClick={() => this.props.history.push('/change-password')}>change password</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item onClick={() => this.setState({ loading: true })}>
-                <LogoutLink setLoading={this.setLoading} />
-              </NavDropdown.Item>
+              <NavDropdown.Item onClick={this.logout}>logout</NavDropdown.Item>
             </NavDropdown>
           </div>
 

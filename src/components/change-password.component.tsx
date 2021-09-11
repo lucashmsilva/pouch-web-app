@@ -103,7 +103,7 @@ class ChangePassword extends Component<Props, State>{
                   />
                 </div>
               ) : (
-                <div style={{display: "hidden"}} />
+                <div style={{ display: "hidden" }} />
               )}
 
               <div className="form-group">
@@ -118,9 +118,7 @@ class ChangePassword extends Component<Props, State>{
               {loadingChangePasswordRequest ? (
                 <LoadingSpinner />
               ) : (
-                <div className="login-options">
-                  <button className="btn btn-success" onClick={this.changePassword}>submit</button>
-                </div>
+                <button className="btn btn-success" onClick={this.changePassword}>submit</button>
               )}
             </div>
           </div >

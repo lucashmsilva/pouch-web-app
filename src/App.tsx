@@ -12,6 +12,7 @@ import ArticleList from "./components/article-list.component";
 import Login from "./components/login.component";
 import GitHubLoginCallback from "./components/github-login-callback.component";
 import ChangePassword from "./components/change-password.component";
+import ResetPassword from "./components/reset-password.component";
 
 import LoadingSpinner from "./components/loading.component";
 
@@ -93,6 +94,7 @@ class App extends Component<Props, State> {
               <Route exact path="/articles/:id" component={Article} />
 
               <Route exact path="/change-password" component={ChangePassword} />
+              <Route exact path="/reset-password" component={ResetPassword} />
             </Switch>
           )}
         </div>

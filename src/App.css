@@ -257,11 +257,16 @@ h4.article-item:hover {
 
 .login-options {
   display: flex;
+  flex-direction: column;
+}
+
+.login-buttons {
+  display: flex;
   justify-content: space-around;
   align-items: center;
 }
 
-.login-options button{
+.login-buttons button{
   max-width: max-content;
 }
 

@@ -1,5 +1,5 @@
 import { ChangeEvent, Component } from "react";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import { Link, RouteComponentProps, withRouter } from "react-router-dom";
 import { GithubLoginButton } from "react-social-login-buttons";
 
 import AuthService from "../services/auth.service";
@@ -141,7 +141,7 @@ class Login extends Component<Props, State>{
         ) : (
           <div className="session-box col-md-6">
             <div className="submit-form" >
-            <h3><strong>register</strong></h3>
+              <h3><strong>register</strong></h3>
               <div className="form-group">
                 <input
                   className="form-control"
@@ -170,8 +170,8 @@ class Login extends Component<Props, State>{
               {registrationLoading ? (
                 <LoadingSpinner />
               ) : (
-                <div className="login-options">
-                  <button className="btn btn-success" onClick={this.register}>register</button> 
+                <div className="login-buttons">
+                  <button className="btn btn-success" onClick={this.register}>register</button>
                   <GithubLoginButton onClick={this.githubOAuthCall} align="center"> <span>register </span> </GithubLoginButton>
                 </div>
               )}
@@ -199,8 +199,11 @@ class Login extends Component<Props, State>{
                 <LoadingSpinner />
               ) : (
                 <div className="login-options">
-                  <button className="btn btn-success" onClick={this.login}>login</button>
-                  <GithubLoginButton onClick={this.githubOAuthCall} align="center" > <span>login</span> </GithubLoginButton>
+                  <div className="login-buttons">
+                    <button className="btn btn-success" onClick={this.login}>login</button>
+                    <GithubLoginButton onClick={this.githubOAuthCall} align="center"> <span>login</span> </GithubLoginButton>
+                  </div>
+                  <Link to="/reset-password" style={{alignSelf: "flex-end"}}>forgot my password</Link>
                 </div>
               )}
             </div>

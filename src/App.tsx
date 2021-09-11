@@ -1,12 +1,11 @@
 import { Component } from "react";
-import { Switch, Route, Link, RouteComponentProps, withRouter } from "react-router-dom";
-import { NavDropdown } from "react-bootstrap";
+import { Switch, Route, RouteComponentProps, withRouter } from "react-router-dom";
+import { UnregisterCallback } from "history";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-import AuthService from "./services/auth.service";
-
+import NavBar from "./components/nav-bar.component";
 import AddArticle from "./components/add-article.component";
 import Article from "./components/article.component";
 import ArticleList from "./components/article-list.component";
@@ -16,22 +15,29 @@ import ChangePassword from "./components/change-password.component";
 
 import LoadingSpinner from "./components/loading.component";
 
+const HIDE_NAV_BAR_ROUTES = [ '/', '/login/github/callback', '/reset-password' ];
+
 type Props = RouteComponentProps;
 
 type State = {
   loading: boolean
+  hideNavBarMenus: boolean
 };
 
 class App extends Component<Props, State> {
+  private unlistenHistory: UnregisterCallback;
+
   constructor(props: Props) {
     super(props);
 
     this.setLoading = this.setLoading.bind(this);
-    this.logout = this.logout.bind(this);
+    this.unlistenHistory = () => null;
 
     this.state = {
-      loading: false
+      loading: false,
+      hideNavBarMenus: true
     };
+
   }
 
   setLoading(isLoading: boolean) {
@@ -40,48 +46,39 @@ class App extends Component<Props, State> {
     })
   }
 
-  logout() {
-    this.setLoading(true);
-    AuthService.logout()
-      .then(() => this.props.history.push("/"))
-      .catch(error => console.log(error))
-      .finally(() => this.setLoading(false));
+  setHideNavBarMenus(isHiding: boolean) {
+    const { hideNavBarMenus } = this.state;
+    if (hideNavBarMenus !== isHiding) {
+      this.setState({
+        hideNavBarMenus: isHiding
+      });
+    }
+  }
+
+  componentDidMount() {
+    this.props.history.listen = this.props.history.listen.bind(this);
+    
+    const shouldHideNavbarMenus = HIDE_NAV_BAR_ROUTES.includes(window.location.pathname);
+    this.setHideNavBarMenus(shouldHideNavbarMenus);
+
+    this.unlistenHistory = this.props.history.listen(location => {
+      const destinationPath = location.pathname;
+      const shouldHideNavbarMenus = HIDE_NAV_BAR_ROUTES.includes(destinationPath);
+      this.setHideNavBarMenus(shouldHideNavbarMenus);
+    });
+  }
+
+  componentWillUnmount() {
+    this.unlistenHistory();
   }
 
   render() {
-    const { loading } = this.state;
+    const { loading, hideNavBarMenus } = this.state;
 
     return (
       <div>
-        <nav className="navbar navbar-expand  ">
-          <Link to={"/articles"} className="navbar-brand">
-            <strong><p>pouch</p></strong>
-          </Link>
-          <div className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link to={"/articles"} className="nav-link">
-                my list
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to={"/add"} className="nav-link">
-                add
-              </Link>
-            </li>
-          </div>
 
-          <div className="navbar-nav ml-auto">
-            <NavDropdown
-              id="nav-dropdown-dark-example"
-              title="options"
-            >
-              <NavDropdown.Item onClick={() => this.props.history.push('/change-password')}>change password</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item onClick={this.logout}>logout</NavDropdown.Item>
-            </NavDropdown>
-          </div>
-
-        </nav>
+        <NavBar setLoading={this.setLoading} hideMenus={hideNavBarMenus} />
 
         <div className="container mt-3">
           {loading ? (
@@ -89,11 +86,13 @@ class App extends Component<Props, State> {
           ) : (
             <Switch>
               <Route exact path={"/"} component={Login} />
+              <Route exact path="/login/github/callback" component={GitHubLoginCallback} />
+
               <Route exact path={"/articles"} component={ArticleList} />
               <Route exact path="/add" component={AddArticle} />
-              <Route path="/articles/:id" component={Article} />
-              <Route path="/login/github/callback" component={GitHubLoginCallback} />
-              <Route path="/change-password" component={ChangePassword} />
+              <Route exact path="/articles/:id" component={Article} />
+
+              <Route exact path="/change-password" component={ChangePassword} />
             </Switch>
           )}
         </div>

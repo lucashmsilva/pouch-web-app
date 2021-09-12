@@ -28,7 +28,7 @@ class ArticleList extends Component<Props, State> {
 
     this.state = {
       articles: {
-        page: 0,
+        page: -1,
         pages: 0,
         count: 0,
         size: 0,
@@ -86,7 +86,7 @@ class ArticleList extends Component<Props, State> {
           <div>
             <ul className="list-group">
               <InfiniteScroll
-                dataLength={this.state.articles.count}
+                dataLength={this.state.articles.articles.length}
                 next={() => this.retrieveArticles(true)}
                 hasMore={this.state.articles.page !== this.state.articles.pages}
                 loader={<LoadingSpinner />}

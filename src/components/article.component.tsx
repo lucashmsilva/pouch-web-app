@@ -88,8 +88,11 @@ class Article extends Component<Props, State> {
           <div className="article">
             <h1><strong>{currentArticle.articleContent.title}</strong></h1>
             <div className="article-metadata">
+            <span>{Math.ceil(currentArticle.readingTime / 60000)} minutes read - <a href={currentArticle.originalUrl} target="_blank" rel="noreferrer">Original</a></span>
+            <div className="article-metadata inner">
               <TagList tags={currentArticle.tags} />
               <IconList article={currentArticle} />
+            </div>
             </div>
             <hr/>
             <div dangerouslySetInnerHTML={{ __html: currentArticle.articleContent?.content || currentArticle.originalUrl }} />

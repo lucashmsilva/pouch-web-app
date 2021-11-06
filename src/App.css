@@ -148,6 +148,18 @@ h4.article-item:hover {
   margin-bottom: 5px;
 }
 
+.article-metadata.inner {
+  flex-wrap: wrap;
+  align-self: flex-end;
+  justify-content: flex-end;
+  margin: 0;
+}
+
+.article-metadata.inner .icons-list{
+  margin-left: 15px;
+}
+
+
 .article hr {
   display: block;
   height: 1px;

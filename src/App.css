@@ -23,8 +23,9 @@
   --item-list-active-background: #3B3948;
 }
 
-body {
-  background-color: var(--main-background);
+body,
+.modal-content {
+  background-color: var(--main-background) !important;
   color: var(--main-foreground);
   font-family:  Helvetica, Arial, sans-serif; 
 }
@@ -128,7 +129,7 @@ a, a:hover {
   border-radius: 6px;
   margin-inline-start: max(calc(50% - 17px - var(--inline-padding)), calc(100% - 96px - 34px - 2 * var(--inline-padding)));
   list-style: none;
-  user-select: none; 
+  user-select: none;
   margin-bottom: 20px;
 }
 
@@ -310,6 +311,34 @@ h4.article-item:hover {
 
 .page {
   word-wrap: break-word;
+}
+
+.modal-autoheight .modal-body {
+  min-height: 150px !important;
+  max-height: 450px !important;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.modal-autoheight .modal-body .list-group {
+  min-height: 100px !important;
+}
+
+.modal-autoheight .modal-body .list-group .list-group-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-autoheight .modal-body .list-group .list-group-item:last-child {
+  border-bottom: 1px solid var(--toolbar-border);
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--toolbar-border);
+}
+.modal-footer {
+  border-top: 1px solid var(--toolbar-border);
 }
 
 .lds-facebook {

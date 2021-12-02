@@ -102,26 +102,30 @@ a, a:hover {
   margin: auto;
 }
 
-.list-group-item.active {
+.article-list.list-group-item.active {
   background-color: var(--main-background);
   color: var(--main-foreground);
 }
 
-.list-group-item:first-child,
-.list-group-item:last-child,
-.list-group-item.active,
-.list-group-item + .list-group-item.active,
-.list-group-item + .list-group-item {
+.article-list.list-group-item:first-child,
+.article-list.list-group-item:last-child,
+.article-list.list-group-item.active,
+.article-list.list-group-item + .list-group-item.active,
+.article-list.list-group-item + .list-group-item {
   margin-top: 0px;
   border: 1px solid var(--toolbar-border);
   border-radius: 6px;
   
 }
+
 .list-group-item {
-  border: 1px solid var(--toolbar-border);
-  border-radius: 6px;
-  word-wrap:break-word;
   background-color: var(--main-background);
+  border: 1px solid var(--toolbar-border);
+  word-wrap:break-word;
+}
+
+.article-list.list-group-item {
+  border-radius: 6px;
   margin-inline-start: max(calc(50% - 17px - var(--inline-padding)), calc(100% - 96px - 34px - 2 * var(--inline-padding)));
   list-style: none;
   user-select: none; 

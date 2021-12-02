@@ -84,7 +84,7 @@ class ArticleList extends Component<Props, State> {
           <LoadingSpinner />
         ) : (
           <div>
-            <ul className="list-group">
+            <ul className="article-list list-group">
               <InfiniteScroll
                 dataLength={this.state.articles.articles.length}
                 next={() => this.retrieveArticles(true)}
@@ -93,7 +93,7 @@ class ArticleList extends Component<Props, State> {
               >
                 {articles && articles.articles.map((article: IArticleData, index: number) => (
                   <li
-                    className={`list-group-item ${index === currentIndex ? "active" : ""}`}
+                    className={`article-list list-group-item ${index === currentIndex ? "active" : ""}`}
                     key={index}
                     onMouseEnter={() => this.highlightItem(index)}
                     onMouseLeave={() => this.highlightItem(-1)}

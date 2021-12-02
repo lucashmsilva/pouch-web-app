@@ -4,7 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import ArticleDataService from "../services/article.service";
 import IArticleData from "../types/article.type";
 import LoadingSpinner from './loading.component';
-import IconList from "./icon-list.component";
+import AticleActions from "./article-actions.component";
 import TagList from "./tag-list.component";
 
 interface RouterProps {
@@ -22,6 +22,7 @@ class Article extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.getArticle = this.getArticle.bind(this);
+    this.reloadArticleData = this.reloadArticleData.bind(this);
 
     this.state = {
       currentArticle: {
@@ -77,6 +78,10 @@ class Article extends Component<Props, State> {
       });
   }
 
+  reloadArticleData(updatedArticleData: IArticleData) {
+    this.setState({currentArticle: {...this.state.currentArticle, ...updatedArticleData}})
+  }
+
   render() {
     const { currentArticle, loading } = this.state;
 
@@ -91,7 +96,7 @@ class Article extends Component<Props, State> {
             <span>{Math.ceil(currentArticle.readingTime / 60000)} minutes read - <a href={currentArticle.originalUrl} target="_blank" rel="noreferrer">Original</a></span>
             <div className="article-metadata inner">
               <TagList tags={currentArticle.tags} />
-              <IconList article={currentArticle} />
+              <AticleActions article={currentArticle} onArticleEdit={this.reloadArticleData} onDeleteRedirectTo={'/articles'} />
             </div>
             </div>
             <hr/>

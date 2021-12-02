@@ -6,7 +6,7 @@ import ArticleDataService from "../services/article.service";
 import IArticleData from '../types/article.type';
 import IArticleListData from "../types/article-list.type";
 import LoadingSpinner from './loading.component';
-import IconList from "./icon-list.component";
+import ArticleActions from "./article-actions.component";
 import TagList from "./tag-list.component";
 
 type Props = RouteComponentProps;
@@ -25,13 +25,15 @@ class ArticleList extends Component<Props, State> {
     this.retrieveArticles = this.retrieveArticles.bind(this);
     this.highlightItem = this.highlightItem.bind(this);
     this.openArticle = this.openArticle.bind(this);
+    this.reloadPage = this.reloadPage.bind(this);
+    this.reloadSingleArticleData = this.reloadSingleArticleData.bind(this);
 
     this.state = {
       articles: {
         page: -1,
         pages: 0,
         count: 0,
-        size: 0,
+        size: 10,
         articles: [],
       },
       currentIndex: -1,
@@ -45,7 +47,7 @@ class ArticleList extends Component<Props, State> {
 
   retrieveArticles(ignoreLoading: boolean) {
     this.setState({ loading: true && !ignoreLoading });
-    ArticleDataService.getAll({ page: this.state.articles.page + 1, size: 10 })
+    ArticleDataService.getAll({ page: this.state.articles.page + 1, size: this.state.articles.size })
       .then(response => {
         response.data.articles = this.state.articles.articles.concat(response.data.articles);
         this.setState({
@@ -61,6 +63,42 @@ class ArticleList extends Component<Props, State> {
           this.setState({ loading: false });
         }
       });
+  }
+
+  reloadPage(pageToReload: number) {
+    const { articles } = this.state;
+    const currentArticleList = articles.articles
+    const itemsPerPage = articles.size;
+    const pageFirstIndex = pageToReload * itemsPerPage - itemsPerPage;
+
+    ArticleDataService.getAll({ page: pageToReload, size: this.state.articles.size })
+      .then(response => {
+        let refreshedPage = response.data.articles;
+        currentArticleList.splice(pageFirstIndex, itemsPerPage, ...refreshedPage);
+        let uniqueArticles = currentArticleList.filter((v, i, a) => a.findIndex(tag => tag.id === v.id) === i);
+
+        this.setState({
+          articles: {
+            ...articles,
+            articles: uniqueArticles
+          }
+        });
+        console.log(response.data);
+      })
+      .catch(err => {
+        console.log(err);
+      }).finally(() => {
+        this.setState({ loading: false });
+      });
+  }
+
+  reloadSingleArticleData(updatedArticleData: IArticleData) {
+    const { articles } = this.state;
+    let indexOfItem = articles.articles.findIndex(article => article.id === updatedArticleData.id);
+
+    articles.articles[indexOfItem] = { ...articles.articles[indexOfItem], ...updatedArticleData };
+
+    this.setState({ articles });
   }
 
   highlightItem(index: number) {
@@ -107,7 +145,7 @@ class ArticleList extends Component<Props, State> {
                     <div>{article.articleContent.excerpt?.length > MAX_EXERPT_LENGTH ? `${article.articleContent?.excerpt.slice(0, MAX_EXERPT_LENGTH)} [...]` : article.articleContent.excerpt}</div>
                     <div className="article-metadata">
                       <TagList tags={article.tags} />
-                      <IconList article={article} />
+                      <ArticleActions article={article} onArticleDelete={this.reloadPage} onArticleEdit={this.reloadSingleArticleData} articleList={articles} />
                     </div>
                   </li>
                 ))}

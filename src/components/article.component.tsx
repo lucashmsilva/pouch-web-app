@@ -59,7 +59,10 @@ class Article extends Component<Props, State> {
     this.setState({ loading: true });
     ArticleDataService.get(+id)
       .then((response) => {
-        if (response.data) {
+        if (!response.data.isReadable) {
+          window.open(response.data.originalUrl, "_blank");
+          this.props.history.push('/articles');
+        } else if (response.data) {
           this.setState({
             currentArticle: response.data,
           });

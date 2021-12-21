@@ -70,7 +70,7 @@ class ArticleActions extends Component<Props, State>{
           onArticleEdit(response.data);
         }
 
-        if (response?.data?.deleted && !onArticleDelete && onDeleteRedirectTo) {
+        if ((response?.data?.deleted || response?.data?.archived) && !onArticleDelete && onDeleteRedirectTo) {
           this.props.history.push(onDeleteRedirectTo);
         }
       })

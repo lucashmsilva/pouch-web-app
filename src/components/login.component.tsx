@@ -13,9 +13,10 @@ type Props = RouteComponentProps;
 type State = {
   registrationData: IUserRegistrationData
   loginData: IUserLoginData
-  loadingCheckingSession: boolean,
+  loadingCheckingSession: boolean
   registrationLoading: boolean
   loginLoading: boolean
+  showRegistrationSuccessMessage: boolean
 };
 
 class Login extends Component<Props, State>{
@@ -43,7 +44,8 @@ class Login extends Component<Props, State>{
       },
       loadingCheckingSession: false,
       registrationLoading: false,
-      loginLoading: false
+      loginLoading: false,
+      showRegistrationSuccessMessage: false
     };
   }
 
@@ -69,8 +71,7 @@ class Login extends Component<Props, State>{
     this.setState({ registrationLoading: true });
     AuthService.regsiter(this.state.registrationData)
       .then(() => {
-        this.setState({ registrationLoading: false });
-        this.props.history.push('/articles');
+        this.setState({ registrationLoading: false, showRegistrationSuccessMessage: true });
         console.log('registered!!');
       })
       .catch(error => {
@@ -133,82 +134,99 @@ class Login extends Component<Props, State>{
   }
 
   render() {
-    const { loadingCheckingSession, registrationLoading, loginLoading } = this.state;
+    const { loadingCheckingSession, registrationLoading, loginLoading, showRegistrationSuccessMessage } = this.state;
+
     return (
-      <div>
-        {loadingCheckingSession ? (
-          <LoadingSpinner />
-        ) : (
-          <div className="session-box col-md-6">
-            <div className="submit-form" >
-              <h3><strong>register</strong></h3>
-              <div className="form-group">
-                <input
-                  className="form-control"
-                  placeholder="email"
-                  onChange={this.onChangeEmailInput}
-                />
-              </div>
+      <div className="login-info-box">
+        <div className="site-info">
+          <h3><strong>what is this?</strong></h3>
+          <h5> pouch works just like <a href="https://getpocket.com/pt/" target="_blank" rel="noreferrer">pocket</a>. </h5>
+          <h5> you save links to your account, organize them the way you want and read the content in a neat reading mode. </h5>
+        </div>
+        <>
+          {loadingCheckingSession ? (
+            <LoadingSpinner />
+          ) : (
+            <div className="session-box col-md-6">
+              <div className="submit-form" >
+                <h3><strong>register</strong></h3>
+                {showRegistrationSuccessMessage ? (
+                  <>
+                    <h5>account creadted!</h5>
+                    <h5>login down there.</h5>
+                  </>
+                ) : (
+                  <>
+                    <div className="form-group">
+                      <input
+                        className="form-control"
+                        placeholder="email"
+                        onChange={this.onChangeEmailInput}
+                      />
+                    </div>
 
-              <div className="form-group">
-                <input
-                  className="form-control"
-                  placeholder="name"
-                  onChange={this.onChangeNameInput}
-                />
-              </div>
+                    <div className="form-group">
+                      <input
+                        className="form-control"
+                        placeholder="name"
+                        onChange={this.onChangeNameInput}
+                      />
+                    </div>
 
-              <div className="form-group">
-                <input
-                  className="form-control"
-                  placeholder="password"
-                  type="password"
-                  onChange={this.onChangeRegisterPasswordInput}
-                />
-              </div>
+                    <div className="form-group">
+                      <input
+                        className="form-control"
+                        placeholder="password"
+                        type="password"
+                        onChange={this.onChangeRegisterPasswordInput}
+                      />
+                    </div>
 
-              {registrationLoading ? (
-                <LoadingSpinner />
-              ) : (
-                <div className="login-buttons">
-                  <button className="btn btn-success" onClick={this.register}>register</button>
-                  <GithubLoginButton onClick={this.githubOAuthCall} align="center"> <span>register </span> </GithubLoginButton>
+                    {registrationLoading ? (
+                      <LoadingSpinner />
+                    ) : (
+                      <div className="login-buttons">
+                        <button className="btn btn-success" onClick={this.register}>register</button>
+                        <GithubLoginButton onClick={this.githubOAuthCall} align="center"> <span>register </span> </GithubLoginButton>
+                      </div>
+                    )}
+                  </>
+                )}
+
+                <div className="divisor-block"><div className="divider" /> <h4>or</h4> <div className="divider" /> </div>
+
+                <h3><strong>login</strong></h3>
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    placeholder="email"
+                    onChange={this.onChangeUsernameInput}
+                  />
                 </div>
-              )}
+                <div className="form-group">
+                  <input
+                    className="form-control"
+                    placeholder="password"
+                    type="password"
+                    onChange={this.onChangeLoginPasswordInput}
+                  />
+                </div>
 
-              <div className="divisor-block"><div className="divider" /> <h4>or</h4> <div className="divider" /> </div>
-
-              <h3><strong>login</strong></h3>
-              <div className="form-group">
-                <input
-                  className="form-control"
-                  placeholder="email"
-                  onChange={this.onChangeUsernameInput}
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  className="form-control"
-                  placeholder="password"
-                  type="password"
-                  onChange={this.onChangeLoginPasswordInput}
-                />
-              </div>
-
-              {loginLoading ? (
-                <LoadingSpinner />
-              ) : (
-                <div className="login-options">
-                  <div className="login-buttons">
-                    <button className="btn btn-success" onClick={this.login}>login</button>
-                    <GithubLoginButton onClick={this.githubOAuthCall} align="center"> <span>login</span> </GithubLoginButton>
+                {loginLoading ? (
+                  <LoadingSpinner />
+                ) : (
+                  <div className="login-options">
+                    <div className="login-buttons">
+                      <button className="btn btn-success" onClick={this.login}>login</button>
+                      <GithubLoginButton onClick={this.githubOAuthCall} align="center"> <span>login</span> </GithubLoginButton>
+                    </div>
+                    <Link to="/reset-password" style={{ alignSelf: "flex-end" }}>forgot my password</Link>
                   </div>
-                  <Link to="/reset-password" style={{alignSelf: "flex-end"}}>forgot my password</Link>
-                </div>
-              )}
-            </div>
-          </div >
-        )}
+                )}
+              </div>
+            </div >
+          )}
+        </>
       </div>
     );
   }

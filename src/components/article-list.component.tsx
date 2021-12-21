@@ -15,6 +15,7 @@ type State = {
   articles: IArticleListData
   currentIndex: number
   loading: boolean
+  showEmptyListInfo: boolean
 };
 
 const MAX_EXERPT_LENGTH = 150;
@@ -37,7 +38,8 @@ class ArticleList extends Component<Props, State> {
         articles: [],
       },
       currentIndex: -1,
-      loading: false
+      loading: false,
+      showEmptyListInfo: false
     };
   }
 
@@ -51,9 +53,13 @@ class ArticleList extends Component<Props, State> {
       .then(response => {
         response.data.articles = this.state.articles.articles.concat(response.data.articles);
         this.setState({
-          articles: response.data
+          articles: response.data,
+          loading: false
         });
-        this.setState({ loading: false });
+
+        if (response.data.articles.length === 0) {
+          this.setState({ showEmptyListInfo: true });
+        }
         console.log(response.data);
       })
       .catch(err => {
@@ -83,6 +89,10 @@ class ArticleList extends Component<Props, State> {
             articles: uniqueArticles
           }
         });
+
+        if (uniqueArticles.length === 0) {
+          this.setState({ showEmptyListInfo: true });
+        }
         console.log(response.data);
       })
       .catch(err => {
@@ -114,46 +124,57 @@ class ArticleList extends Component<Props, State> {
   }
 
   render() {
-    const { articles, currentIndex, loading } = this.state;
+    const { articles, currentIndex, loading, showEmptyListInfo } = this.state;
 
     return (
-      <div>
-        {loading ? (
-          <LoadingSpinner />
+      <>
+        {showEmptyListInfo ? (
+          <div>
+            <h5>looks like you have no links saved or visible here.</h5>
+            <h5>
+              install our web extension (<a href="https://addons.mozilla.org/firefox/addon/pouch-web-extension/" target="_blank" rel="noreferrer">for firefox</a> and chrome comming soon) or click "add" up there, to save a link to an article in your pouch.
+            </h5>
+          </div>
         ) : (
           <div>
-            <ul className="article-list list-group">
-              <InfiniteScroll
-                dataLength={this.state.articles.articles.length}
-                next={() => this.retrieveArticles(true)}
-                hasMore={this.state.articles.page !== this.state.articles.pages}
-                loader={<LoadingSpinner />}
-              >
-                {articles && articles.articles.map((article: IArticleData, index: number) => (
-                  <li
-                    className={`article-list list-group-item ${index === currentIndex ? "active" : ""}`}
-                    key={index}
-                    onMouseEnter={() => this.highlightItem(index)}
-                    onMouseLeave={() => this.highlightItem(-1)}
+            {loading ? (
+              <LoadingSpinner />
+            ) : (
+              <div>
+                <ul className="article-list list-group">
+                  <InfiniteScroll
+                    dataLength={this.state.articles.articles.length}
+                    next={() => this.retrieveArticles(true)}
+                    hasMore={this.state.articles.page !== this.state.articles.pages && this.state.articles.pages > 0}
+                    loader={<LoadingSpinner />}
                   >
-                    <h4
-                      className="article-item"
-                      onClick={() => this.openArticle(article.id, article.isReadable, article.originalUrl)}
-                    >
-                      <strong>{article.articleContent?.title}</strong>
-                    </h4>
-                    <div>{article.articleContent.excerpt?.length > MAX_EXERPT_LENGTH ? `${article.articleContent?.excerpt.slice(0, MAX_EXERPT_LENGTH)} [...]` : article.articleContent.excerpt}</div>
-                    <div className="article-metadata">
-                      <TagList tags={article.tags} />
-                      <ArticleActions article={article} onArticleDelete={this.reloadPage} onArticleEdit={this.reloadSingleArticleData} articleList={articles} />
-                    </div>
-                  </li>
-                ))}
-              </InfiniteScroll>
-            </ul>
+                    {articles && articles.articles.map((article: IArticleData, index: number) => (
+                      <li
+                        className={`article-list list-group-item ${index === currentIndex ? "active" : ""}`}
+                        key={index}
+                        onMouseEnter={() => this.highlightItem(index)}
+                        onMouseLeave={() => this.highlightItem(-1)}
+                      >
+                        <h4
+                          className="article-item"
+                          onClick={() => this.openArticle(article.id, article.isReadable, article.originalUrl)}
+                        >
+                          <strong>{article.articleContent?.title}</strong>
+                        </h4>
+                        <div>{article.articleContent.excerpt?.length > MAX_EXERPT_LENGTH ? `${article.articleContent?.excerpt.slice(0, MAX_EXERPT_LENGTH)} [...]` : article.articleContent.excerpt}</div>
+                        <div className="article-metadata">
+                          <TagList tags={article.tags} />
+                          <ArticleActions article={article} onArticleDelete={this.reloadPage} onArticleEdit={this.reloadSingleArticleData} articleList={articles} />
+                        </div>
+                      </li>
+                    ))}
+                  </InfiniteScroll>
+                </ul>
+              </div>
+            )}
           </div>
         )}
-      </div>
+      </>
     );
   }
 }

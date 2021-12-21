@@ -139,17 +139,17 @@ class Login extends Component<Props, State>{
     const { loadingCheckingSession, registrationLoading, loginLoading, showRegistrationSuccessMessage, showInvalidCredentialsMessage } = this.state;
 
     return (
-      <div className="login-info-box">
-        <div className="site-info">
-          <h3><strong>what is this?</strong></h3>
-          <h5> pouch works just like <a href="https://getpocket.com/pt/" target="_blank" rel="noreferrer">pocket</a>. </h5>
-          <h5> you save links to your account, organize them the way you want and read the content in a neat reading mode. </h5>
-        </div>
-        <>
-          <div className="session-box col-md-6">
-            {loadingCheckingSession ? (
-              <LoadingSpinner />
-            ) : (
+      <>
+        {loadingCheckingSession ? (
+          <LoadingSpinner />
+        ) : (
+          <div className="login-info-box">
+            <div className="site-info">
+              <h3><strong>what is this?</strong></h3>
+              <h5> pouch works just like <a href="https://getpocket.com/pt/" target="_blank" rel="noreferrer">pocket</a>. </h5>
+              <h5> you save links to your account, organize them the way you want and read the content in a neat reading mode. </h5>
+            </div>
+            <div className="session-box col-md-6">
               <div className="submit-form" >
                 <h3><strong>register</strong></h3>
                 {showRegistrationSuccessMessage ? (
@@ -227,10 +227,10 @@ class Login extends Component<Props, State>{
                   </div>
                 )}
               </div>
-            )}
-          </div >
-        </>
-      </div>
+            </div >
+          </div>
+        )}
+      </>
     );
   }
 }

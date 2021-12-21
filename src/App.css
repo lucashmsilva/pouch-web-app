@@ -36,6 +36,7 @@ img {
   width: auto;
   height: auto;
   margin: auto;
+  background-color: var(--main-foreground);
 }
 
 code, pre {

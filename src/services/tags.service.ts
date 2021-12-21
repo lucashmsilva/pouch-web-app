@@ -9,8 +9,9 @@ class ArticleDataService {
     return http.post(`/article/${articleId}/tag`, { tags });
   }
 
-  delete(articleId: number, tagId: number) {
-    return http.delete(`/article/${articleId}/tag/${tagId}`);
+  delete(tagId: number, articleId?: number) {
+    let url = articleId ? `/article/${articleId}/tag/${tagId}` : `/article/tag/${tagId}`
+    return http.delete(url);
   }
 }
 

@@ -129,10 +129,10 @@ class ArticleList extends Component<Props, State> {
     return (
       <>
         {showEmptyListInfo ? (
-          <div>
+          <div className="d-flex justify-content-sm-center flex-column w-75 mx-auto">
             <h5>looks like you have no links saved or visible here.</h5>
             <h5>
-              install our web extension (<a href="https://addons.mozilla.org/firefox/addon/pouch-web-extension/" target="_blank" rel="noreferrer">for firefox</a> and chrome comming soon) or click "add" up there, to save a link to an article in your pouch.
+              install our web extension (<a href="https://addons.mozilla.org/firefox/addon/pouch-web-extension/" target="_blank" rel="noreferrer">for firefox</a> and chrome coming soon) or click "add" up there, to save a link to an article in your pouch.
             </h5>
           </div>
         ) : (

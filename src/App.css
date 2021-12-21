@@ -298,6 +298,8 @@ h4.article-item:hover {
   flex-basis: 10%;
   margin-left: unset;
   margin-right: unset;
+  min-height: 558.2px;
+  display: flex;
 }
 
 .loading {

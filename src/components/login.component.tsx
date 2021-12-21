@@ -17,6 +17,7 @@ type State = {
   registrationLoading: boolean
   loginLoading: boolean
   showRegistrationSuccessMessage: boolean
+  showInvalidCredentialsMessage: boolean
 };
 
 class Login extends Component<Props, State>{
@@ -45,7 +46,8 @@ class Login extends Component<Props, State>{
       loadingCheckingSession: false,
       registrationLoading: false,
       loginLoading: false,
-      showRegistrationSuccessMessage: false
+      showRegistrationSuccessMessage: false,
+      showInvalidCredentialsMessage: false
     };
   }
 
@@ -63,7 +65,7 @@ class Login extends Component<Props, State>{
       })
       .catch(error => {
         console.log(error);
-        this.setState({ loginLoading: false });
+        this.setState({ loginLoading: false, showInvalidCredentialsMessage: true });
       });
   }
 
@@ -134,7 +136,7 @@ class Login extends Component<Props, State>{
   }
 
   render() {
-    const { loadingCheckingSession, registrationLoading, loginLoading, showRegistrationSuccessMessage } = this.state;
+    const { loadingCheckingSession, registrationLoading, loginLoading, showRegistrationSuccessMessage, showInvalidCredentialsMessage } = this.state;
 
     return (
       <div className="login-info-box">
@@ -144,10 +146,10 @@ class Login extends Component<Props, State>{
           <h5> you save links to your account, organize them the way you want and read the content in a neat reading mode. </h5>
         </div>
         <>
-          {loadingCheckingSession ? (
-            <LoadingSpinner />
-          ) : (
-            <div className="session-box col-md-6">
+          <div className="session-box col-md-6">
+            {loadingCheckingSession ? (
+              <LoadingSpinner />
+            ) : (
               <div className="submit-form" >
                 <h3><strong>register</strong></h3>
                 {showRegistrationSuccessMessage ? (
@@ -210,6 +212,7 @@ class Login extends Component<Props, State>{
                     type="password"
                     onChange={this.onChangeLoginPasswordInput}
                   />
+                  {showInvalidCredentialsMessage ? <p>invalid credentials!</p> : <></>}
                 </div>
 
                 {loginLoading ? (
@@ -224,8 +227,8 @@ class Login extends Component<Props, State>{
                   </div>
                 )}
               </div>
-            </div >
-          )}
+            )}
+          </div >
         </>
       </div>
     );

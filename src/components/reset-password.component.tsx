@@ -85,7 +85,7 @@ class ResetPassword extends Component<Props, State>{
         {loading ? (
           <LoadingSpinner />
         ) : (
-          <div className="session-box col-md-6">
+          <div className="d-flex justify-content-center">
             <div className="submit-form" >
               <h3><strong>{operationJWT ? 'enter the new password' : 'enter the email to receive the link'}</strong></h3>
               {operationJWT ? (

@@ -89,7 +89,7 @@ class ChangePassword extends Component<Props, State>{
         {loadingCheckingSession ? (
           <LoadingSpinner />
         ) : (
-          <div className="session-box col-md-6">
+          <div className="d-flex justify-content-center">
             <div className="submit-form" >
               <h3><strong>change login password</strong></h3>
 

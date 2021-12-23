@@ -23,7 +23,7 @@
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "share_target": {
-    "action": "/share",
+    "action": "/share-handler",
     "params": {
       "title": "title",
       "text": "text",

@@ -13,10 +13,11 @@ import Login from "./components/login.component";
 import GitHubLoginCallback from "./components/github-login-callback.component";
 import ChangePassword from "./components/change-password.component";
 import ResetPassword from "./components/reset-password.component";
+import ShareHandlerComponent from "./components/share-handler.component";
 
 import LoadingSpinner from "./components/loading.component";
 
-const HIDE_NAV_BAR_ROUTES = [ '/', '/login/github/callback', '/reset-password' ];
+const HIDE_NAV_BAR_ROUTES = ['/', '/login/github/callback', '/reset-password'];
 
 type Props = RouteComponentProps;
 
@@ -58,7 +59,7 @@ class App extends Component<Props, State> {
 
   componentDidMount() {
     this.props.history.listen = this.props.history.listen.bind(this);
-    
+
     const shouldHideNavbarMenus = HIDE_NAV_BAR_ROUTES.includes(window.location.pathname);
     this.setHideNavBarMenus(shouldHideNavbarMenus);
 
@@ -95,6 +96,8 @@ class App extends Component<Props, State> {
 
               <Route exact path="/change-password" component={ChangePassword} />
               <Route exact path="/reset-password" component={ResetPassword} />
+
+              <Route exact path="/share-handler" component={ShareHandlerComponent} />
             </Switch>
           )}
         </div>

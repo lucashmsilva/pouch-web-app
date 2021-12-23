@@ -6,6 +6,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js')
+    .then(function (reg) {
+      console.log("Service worker registered.");
+    }).catch(function (err) {
+      console.log("Service worker not registered. This happened:", err)
+    });
+}
+
 ReactDOM.render(
   <BrowserRouter>
     <App />

@@ -8,19 +8,13 @@ import LoadingSpinner from './loading.component';
 
 type Props = RouteComponentProps;
 
-type State = {
-  params: string
-}
+type State = {}
 
 class ShareHandlerComponent extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.checkSession = this.checkSession.bind(this);
     this.saveArticle = this.saveArticle.bind(this);
-
-    this.state = {
-      params: '-'
-    };
   }
 
   componentDidMount() {
@@ -31,9 +25,9 @@ class ShareHandlerComponent extends Component<Props, State> {
 
   saveArticle() {
     let params = queryString.parse(this.props.location.search);
-    let { url } = params;
+    let { text } = params;
     this.setState({ params: JSON.stringify(params) });
-    return ArticleDataService.create(url as string)
+    return ArticleDataService.create(text as string)
       .then(response => this.props.history.push(`/articles/${response.data.id}`))
       .catch(console.log);
   }
@@ -50,12 +44,7 @@ class ShareHandlerComponent extends Component<Props, State> {
   }
 
   render() {
-    return (
-      <>
-        {this.state.params}
-        <LoadingSpinner />
-      </>
-    );
+    return (<LoadingSpinner />);
   }
 }
 

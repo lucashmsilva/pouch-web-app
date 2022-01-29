@@ -49,6 +49,11 @@ class NavBar extends Component<Props, State> {
             </Link>
           </li>
           <li className="nav-item">
+            <NavDropdown id="sections-menu" title="sections" >
+              <NavDropdown.Item onClick={() => this.props.history.push('/articles/archived')}>archive</NavDropdown.Item>
+            </NavDropdown>
+          </li>
+          <li className="nav-item">
             <Link to={"/add"} className="nav-link">
               add
             </Link>
@@ -56,10 +61,7 @@ class NavBar extends Component<Props, State> {
         </div>
 
         <div className={`navbar-nav ml-auto ${hideMenus ? 'd-none' : ''}`}>
-          <NavDropdown
-            id="nav-dropdown-dark-example"
-            title="options"
-          >
+          <NavDropdown id="options-menu" title="options" >
             <NavDropdown.Item onClick={() => this.props.history.push('/change-password')}>change password</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item onClick={this.logout}>logout</NavDropdown.Item>

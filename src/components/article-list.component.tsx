@@ -8,8 +8,11 @@ import IArticleListData from "../types/article-list.type";
 import LoadingSpinner from './loading.component';
 import ArticleActions from "./article-actions.component";
 import TagList from "./tag-list.component";
+import IListFiltersData from "../types/list-filters.type";
 
-type Props = RouteComponentProps;
+type Props = {
+  filters?: IListFiltersData
+} & RouteComponentProps;
 
 type State = {
   articles: IArticleListData
@@ -49,7 +52,9 @@ class ArticleList extends Component<Props, State> {
 
   retrieveArticles(ignoreLoading: boolean) {
     this.setState({ loading: true && !ignoreLoading });
-    ArticleDataService.getAll({ page: this.state.articles.page + 1, size: this.state.articles.size })
+    const { filters } = this.props;
+
+    ArticleDataService.getAll({ page: this.state.articles.page + 1, size: this.state.articles.size, ...filters })
       .then(response => {
         response.data.articles = this.state.articles.articles.concat(response.data.articles);
         this.setState({
@@ -76,8 +81,9 @@ class ArticleList extends Component<Props, State> {
     const currentArticleList = articles.articles
     const itemsPerPage = articles.size;
     const pageFirstIndex = pageToReload * itemsPerPage - itemsPerPage;
+    const { filters } = this.props;
 
-    ArticleDataService.getAll({ page: pageToReload, size: this.state.articles.size })
+    ArticleDataService.getAll({ page: pageToReload, size: this.state.articles.size, ...filters })
       .then(response => {
         let refreshedPage = response.data.articles;
         currentArticleList.splice(pageFirstIndex, itemsPerPage, ...refreshedPage);

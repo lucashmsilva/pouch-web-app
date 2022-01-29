@@ -60,6 +60,9 @@ a, a:hover {
 .navbar-nav .nav-link {
   color: rgba(255,255,255,.5);
 }
+.navbar-expand .navbar-nav .nav-link {
+  padding-left: unset;
+}
 
 .form-control {
   background-color: #343a40;

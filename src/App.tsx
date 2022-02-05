@@ -6,7 +6,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
 import NavBar from "./components/nav-bar.component";
-import AddArticle from "./components/add-article.component";
 import Article from "./components/article.component";
 import ArticleList from "./components/article-list.component";
 import Login from "./components/login.component";
@@ -91,7 +90,6 @@ class App extends Component<Props, State> {
               <Route exact path="/login/github/callback" component={GitHubLoginCallback} />
 
               <Route exact path={"/articles"} component={ArticleList} />
-              <Route exact path="/add" component={AddArticle} />
               <Route exact path="/articles/:id([0-9]+)" component={Article} />
               <Route exact path={"/articles/archived"}> <ArticleList filters={{ archived: true }} /> </Route>
 

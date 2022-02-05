@@ -63,6 +63,9 @@ a, a:hover {
 .navbar-expand .navbar-nav .nav-link {
   padding-left: unset;
 }
+.nav-link {
+  cursor: pointer;
+}
 
 .form-control {
   background-color: #343a40;

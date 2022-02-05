@@ -51,15 +51,14 @@ class NavBar extends Component<Props, State> {
             <strong><p>pouch</p></strong>
           </Link>
 
-        <div className={`navbar-nav mr-auto ${hideMenus ? 'd-none' : ''}`}>
-          <li className="nav-item">
-            <Link to={"/articles"} className="nav-link">
-              my list
-            </Link>
-          </li>
-          <li className="nav-item">
-            <NavDropdown id="sections-menu" title="sections" >
-              <NavDropdown.Item onClick={() => this.props.history.push('/articles/archived')}>archive</NavDropdown.Item>
+          <div className={`navbar-nav mr-auto ${hideMenus ? 'd-none' : ''}`}>
+            <li className="nav-item">
+              <NavDropdown id="sections-menu" title="sections" >
+                <NavDropdown.Item onClick={() => this.props.history.push('/articles')}>my list</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={() => this.props.history.push('/articles/archived')}>archive</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={() => this.props.history.push('/articles/favorited')}>favorited</NavDropdown.Item>
               </NavDropdown>
             </li>
             <li className="nav-item">
@@ -67,16 +66,16 @@ class NavBar extends Component<Props, State> {
             </li>
           </div>
 
-        <div className={`navbar-nav ml-auto ${hideMenus ? 'd-none' : ''}`}>
-          <NavDropdown id="options-menu" title="options" >
-            <NavDropdown.Item onClick={() => this.props.history.push('/change-password')}>change password</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item onClick={this.logout}>logout</NavDropdown.Item>
-          </NavDropdown>
-        </div>
-      </nav>
+          <div className={`navbar-nav ml-auto ${hideMenus ? 'd-none' : ''}`}>
+            <NavDropdown id="options-menu" title="options" >
+              <NavDropdown.Item onClick={() => this.props.history.push('/change-password')}>change password</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={this.logout}>logout</NavDropdown.Item>
+            </NavDropdown>
+          </div>
+        </nav>
 
-        <AddArticleModal ref={this.addArticleModalElement} onArticleAdded={this.moveToAddedArticle}/>
+        <AddArticleModal ref={this.addArticleModalElement} onArticleAdded={this.moveToAddedArticle} />
       </>
     );
   }

@@ -91,7 +91,8 @@ class App extends Component<Props, State> {
 
               <Route exact path={"/articles"} component={ArticleList} />
               <Route exact path="/articles/:id([0-9]+)" component={Article} />
-              <Route exact path={"/articles/archived"}> <ArticleList filters={{ archived: true }} /> </Route>
+              <Route exact path="/articles/archived"> <ArticleList filters={{ archived: true }} /> </Route>
+              <Route exact path="/articles/favorited"> <ArticleList filters={{ favorited: true }} /> </Route>
 
               <Route exact path="/change-password" component={ChangePassword} />
               <Route exact path="/reset-password" component={ResetPassword} />

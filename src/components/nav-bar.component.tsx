@@ -54,7 +54,7 @@ class NavBar extends Component<Props, State> {
           <div className={`navbar-nav mr-auto ${hideMenus ? 'd-none' : ''}`}>
             <li className="nav-item">
               <NavDropdown id="sections-menu" title="sections" >
-                <NavDropdown.Item onClick={() => this.props.history.push('/articles')}>my list</NavDropdown.Item>
+                <NavDropdown.Item onClick={() => this.props.history.push('/articles')}>reading list</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={() => this.props.history.push('/articles/archived')}>archive</NavDropdown.Item>
                 <NavDropdown.Divider />

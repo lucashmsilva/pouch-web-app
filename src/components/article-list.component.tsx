@@ -9,6 +9,7 @@ import LoadingSpinner from './loading.component';
 import ArticleActions from "./article-actions.component";
 import TagList from "./tag-list.component";
 import IListFiltersData from "../types/list-filters.type";
+import { Button, Form, InputGroup } from "react-bootstrap";
 
 type Props = {
   filters?: IListFiltersData
@@ -19,11 +20,15 @@ type State = {
   currentIndex: number
   loading: boolean
   showEmptyListInfo: boolean
+  searchQuery: string
+  isShowingSearchResults: boolean
 };
 
 const MAX_EXERPT_LENGTH = 150;
 
 class ArticleList extends Component<Props, State> {
+  private emptyArticleListState: IArticleListData;
+
   constructor(props: Props) {
     super(props);
     this.retrieveArticles = this.retrieveArticles.bind(this);
@@ -32,17 +37,21 @@ class ArticleList extends Component<Props, State> {
     this.reloadPage = this.reloadPage.bind(this);
     this.reloadSingleArticleData = this.reloadSingleArticleData.bind(this);
 
+    this.emptyArticleListState = {
+      page: -1,
+      pages: 0,
+      count: 0,
+      size: 10,
+      articles: [],
+    };
+
     this.state = {
-      articles: {
-        page: -1,
-        pages: 0,
-        count: 0,
-        size: 10,
-        articles: [],
-      },
+      articles: this.emptyArticleListState,
       currentIndex: -1,
       loading: false,
-      showEmptyListInfo: false
+      showEmptyListInfo: false,
+      searchQuery: '',
+      isShowingSearchResults: false
     };
   }
 
@@ -51,37 +60,63 @@ class ArticleList extends Component<Props, State> {
   }
 
   retrieveArticles(ignoreLoading: boolean) {
+    const { searchQuery } = this.state;
     this.setState({ loading: true && !ignoreLoading });
-    const { filters } = this.props;
+    let { filters } = this.props;
 
-    ArticleDataService.getAll({ page: this.state.articles.page + 1, size: this.state.articles.size, ...filters })
-      .then(response => {
-        response.data.articles = this.state.articles.articles.concat(response.data.articles);
-        this.setState({
-          articles: response.data,
-          loading: false
+    const fetchArticles = (filters?: IListFiltersData) => {
+      ArticleDataService.getAll({ page: this.state.articles.page + 1, size: this.state.articles.size, ...filters })
+        .then(response => {
+          response.data.articles = this.state.articles.articles.concat(response.data.articles);
+          this.setState({
+            articles: response.data,
+            loading: false
+          });
+
+          if (response.data.articles.length === 0) {
+            this.setState({ showEmptyListInfo: true });
+          }
+          console.log(response.data);
+        })
+        .catch(err => {
+          if (err.response?.data?.error?.extra?.name === 'missing_user') {
+            this.props.history.push('/');
+          } else {
+            this.setState({ loading: false });
+          }
         });
+    }
 
-        if (response.data.articles.length === 0) {
-          this.setState({ showEmptyListInfo: true });
-        }
-        console.log(response.data);
-      })
-      .catch(err => {
-        if (err.response?.data?.error?.extra?.name === 'missing_user') {
-          this.props.history.push('/');
-        } else {
-          this.setState({ loading: false });
-        }
-      });
+    if (searchQuery !== '') {
+      filters = {
+        ...filters,
+        keywords: searchQuery
+      };
+      this.setState(
+        {
+          articles: this.emptyArticleListState,
+          isShowingSearchResults: true
+        },
+        () => fetchArticles(filters)
+      );
+    } else {
+      fetchArticles(filters)
+    }
   }
 
   reloadPage(pageToReload: number) {
-    const { articles } = this.state;
+    const { articles, searchQuery } = this.state;
     const currentArticleList = articles.articles
     const itemsPerPage = articles.size;
     const pageFirstIndex = pageToReload * itemsPerPage - itemsPerPage;
-    const { filters } = this.props;
+    let { filters } = this.props;
+
+    if (searchQuery !== '') {
+      filters = {
+        ...filters,
+        keywords: searchQuery
+      };
+    }
 
     ArticleDataService.getAll({ page: pageToReload, size: this.state.articles.size, ...filters })
       .then(response => {
@@ -130,7 +165,7 @@ class ArticleList extends Component<Props, State> {
   }
 
   render() {
-    const { articles, currentIndex, loading, showEmptyListInfo } = this.state;
+    const { articles, currentIndex, loading, showEmptyListInfo, searchQuery, isShowingSearchResults } = this.state;
 
     return (
       <>
@@ -143,6 +178,33 @@ class ArticleList extends Component<Props, State> {
           </div>
         ) : (
           <div>
+            <Form.Group >
+              <InputGroup className="search-input">
+                <Form.Control
+                  type="text"
+                  placeholder="search for articles"
+                  aria-describedby="inputGroupAppend"
+                  onChange={e => this.setState({ searchQuery: e.target.value })}
+                  value={searchQuery}
+                  required
+                />
+
+                {isShowingSearchResults ? (
+                  <InputGroup.Append id="inputGroupAppend" className="ml-1 mr-1">
+                    <Button variant="outline-danger" type="submit" onClick={() => this.setState({isShowingSearchResults: false, searchQuery: '', articles: this.emptyArticleListState}, () => this.retrieveArticles(false))}>
+                      clear
+                    </Button>
+                  </InputGroup.Append>
+                ) : (<></>)}
+
+                <InputGroup.Append id="inputGroupAppend" >
+                  <Button variant="secondary" onClick={() => this.retrieveArticles(false)} type="submit" >
+                    search
+                  </Button>
+                </InputGroup.Append>
+              </InputGroup>
+            </Form.Group>
+
             {loading ? (
               <LoadingSpinner />
             ) : (

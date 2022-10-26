@@ -10,4 +10,5 @@ export default interface IListFiltersData {
   sortOrder?: string
   size?: number
   page?: number
+  keywords?: string
 }

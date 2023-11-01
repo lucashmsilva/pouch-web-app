@@ -59,6 +59,8 @@ class NavBar extends Component<Props, State> {
                 <NavDropdown.Item onClick={() => this.props.history.push('/articles/archived')}>archive</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item onClick={() => this.props.history.push('/articles/favorited')}>favorited</NavDropdown.Item>
+                <NavDropdown.Divider />
+                <NavDropdown.Item onClick={() => this.props.history.push('/articles/deleted')}>trash bin</NavDropdown.Item>
               </NavDropdown>
             </li>
             <li className="nav-item">

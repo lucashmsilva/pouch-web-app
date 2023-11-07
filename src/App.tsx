@@ -89,11 +89,11 @@ class App extends Component<Props, State> {
               <Route exact path={"/"} component={Login} />
               <Route exact path="/login/github/callback" component={GitHubLoginCallback} />
 
-              <Route exact path={"/articles"} component={ArticleList} />
-              <Route exact path="/articles/:id([0-9]+)" render={props => <Article key={props.match.params.id}/>} />
+              <Route exact path={"/articles"}> <ArticleList filters={{ archived: false }} key={"0"} /> </Route>
+              <Route exact path="/articles/:id([0-9]+)" render={props => <Article key={props.match.params.id} />} />
               <Route exact path="/articles/archived"> <ArticleList filters={{ archived: true }} key={"1"} /> </Route>
-                <Route exact path="/articles/favorited"> <ArticleList filters={{ favorited: true, archived: true }} key={"2"} /> </Route>
-                <Route exact path="/articles/deleted"> <ArticleList filters={{ deleted: true, archived: true }} key={"2"} /> </Route>
+              <Route exact path="/articles/favorited"> <ArticleList filters={{ favorited: true }} key={"2"} /> </Route>
+              <Route exact path="/articles/deleted"> <ArticleList filters={{ deleted: true }} key={"3"} /> </Route>
 
               <Route exact path="/change-password" component={ChangePassword} />
               <Route exact path="/reset-password" component={ResetPassword} />

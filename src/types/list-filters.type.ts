@@ -11,4 +11,5 @@ export default interface IListFiltersData {
   size?: number
   page?: number
   keywords?: string
+  filterMergingOperator?: string
 }

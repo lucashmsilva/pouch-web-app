@@ -46,7 +46,7 @@ class NavBar extends Component<Props, State> {
     const { hideMenus } = this.props;
     return (
       <>
-        <nav className="navbar navbar-expand ">
+        <nav className="navbar navbar-expand sticky-top">
           <Link to={"/articles"} className="navbar-brand">
             <strong><p>pouch</p></strong>
           </Link>

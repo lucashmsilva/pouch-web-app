@@ -16,6 +16,7 @@ type Props = RouteComponentProps<RouterProps>;
 type State = {
   currentArticle: IArticleData
   loading: boolean
+  lastScrollPostion: string | null
 }
 
 class Article extends Component<Props, State> {
@@ -23,6 +24,7 @@ class Article extends Component<Props, State> {
     super(props);
     this.getArticle = this.getArticle.bind(this);
     this.reloadArticleData = this.reloadArticleData.bind(this);
+    this.handleScroll = this.handleScroll.bind(this);
 
     this.state = {
       currentArticle: {
@@ -47,17 +49,23 @@ class Article extends Component<Props, State> {
         },
         tags: [],
       },
-      loading: false
+      loading: false,
+      lastScrollPostion: null
     };
   }
 
   componentDidMount() {
     this.getArticle(this.props.match.params.id);
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
   }
 
   getArticle(id: string) {
     this.setState({ loading: true });
-    ArticleDataService.get(+id)
+    return ArticleDataService.get(+id)
       .then((response) => {
         if (!response.data.isReadable) {
           window.open(response.data.originalUrl, "_blank");
@@ -67,6 +75,10 @@ class Article extends Component<Props, State> {
             currentArticle: response.data,
           });
           this.setState({ loading: false });
+          const lastScrollPostion = localStorage.getItem(`articleScrollPos:${response.data.id}`);
+          if (lastScrollPostion) {
+            window.scrollTo(0, +lastScrollPostion);
+          }
         } else {
           this.props.history.push('/articles');
         }
@@ -82,7 +94,12 @@ class Article extends Component<Props, State> {
   }
 
   reloadArticleData(updatedArticleData: IArticleData) {
-    this.setState({currentArticle: {...this.state.currentArticle, ...updatedArticleData}})
+    this.setState({ currentArticle: { ...this.state.currentArticle, ...updatedArticleData } });
+  }
+
+  handleScroll() {
+    const { currentArticle } = this.state;
+    localStorage.setItem(`articleScrollPos:${currentArticle.id}`, window.scrollY.toString());
   }
 
   render() {
@@ -96,13 +113,13 @@ class Article extends Component<Props, State> {
           <div className="article">
             <h1><strong>{currentArticle.articleContent.title}</strong></h1>
             <div className="article-metadata">
-            <span>{Math.ceil(currentArticle.readingTime / 60000)} minutes read - <a href={currentArticle.originalUrl} target="_blank" rel="noreferrer">Original</a></span>
-            <div className="article-metadata inner">
-              <TagList tags={currentArticle.tags} />
-              <AticleActions article={currentArticle} onArticleEdit={this.reloadArticleData} onDeleteRedirectTo={'/articles'} />
+              <span>{Math.ceil(currentArticle.readingTime / 60000)} minutes read - <a href={currentArticle.originalUrl} target="_blank" rel="noreferrer">Original</a></span>
+              <div className="article-metadata inner">
+                <TagList tags={currentArticle.tags} />
+                <AticleActions article={currentArticle} onArticleEdit={this.reloadArticleData} onDeleteRedirectTo={'/articles'} />
+              </div>
             </div>
-            </div>
-            <hr/>
+            <hr />
             <div dangerouslySetInnerHTML={{ __html: currentArticle.articleContent?.content || currentArticle.originalUrl }} />
           </div>
         )}
